@@ -1,0 +1,26 @@
+class Solution {
+    public String predictPartyVictory(String senate) {
+    Queue<Integer> queue = new LinkedList();
+    int[] human = new int[]{0, 0};
+    int[] cross = new int[]{0, 0};
+
+    for (char individual: senate.toCharArray()) {
+        int x = individual == 'R' ? 1 : 0;
+        human[x]++;
+        queue.add(x);
+    }
+
+    while (human[0] > 0 && human[1] > 0) {
+        int x = queue.poll();
+        if (cross[x] > 0) {
+            cross[x]--;
+            human[x]--;
+        } else {
+            cross[x^1]++;
+            queue.add(x);
+        }
+    }
+
+    return human[1] > 0 ? "Radiant" : "Dire";
+}
+}
